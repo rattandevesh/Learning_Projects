@@ -1,0 +1,17 @@
+{
+  "name": "ludo-frontend",
+  "version": "1.0.0",
+  "description": "Ludo game frontend using React and Socket.io",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "latest",
+    "socket.io-client": "^4.7.2",
+    "tailwindcss": "^3.4.1"
+  }
+}
