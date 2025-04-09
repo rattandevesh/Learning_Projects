@@ -1,0 +1,11 @@
+# These are on namespace level, to limit/set-request the whole pod.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota-def
+specs:
+  hard:
+    requests.cpu: 4
+    requests.memory: 4Gi
+    limits.cpu: 4
+    limits.memory: 10Gi
