@@ -329,7 +329,11 @@ Node Affinity
 Types:
 Available: requiredDuringSchedulingIgnoredDuringExecution | preferredDuringSchedulingIgnoredDuringExecution |
 Planned: requiredDuringSchedulingRequiredDuringExecution
-
-
-
+-------------********************---------*****************************-------********************------------------
+**Multi-Container Pods**
+kubectl run pod-name --image=nginx --dry-run=client -o yaml > pod.yaml
+# to check logs
+kubectl -n elastic-stack logs kibana
+kubectl replace --force -f pod.yaml
+**Init Containers**
 

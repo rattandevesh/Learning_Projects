@@ -1,16 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
+---
+apiVersion: v1
+kind: Pod
 metadata:
-  name: red
+  name: app
+  namespace: elastic-stack
+  labels:
+    name: app
 spec:
-  replicas: 3
   containers:
-    - name: nginx
-      image: nginx
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
+  - name: app
+    image: kodekloud/event-simulator
+    volumeMounts:
+    - mountPath: /log
+      name: log-volume
+
+  - name: sidecar
+    image: kodekloud/filebeat-configured
+    volumeMounts:
+    - mountPath: /var/log/event-simulator/
+      name: log-volume
+
+  volumes:
+  - name: log-volume
+    hostPath:
+      # directory location on host
+      path: /var/log/webapp
+      # this field is optional
+      type: DirectoryOrCreate
