@@ -336,4 +336,71 @@ kubectl run pod-name --image=nginx --dry-run=client -o yaml > pod.yaml
 kubectl -n elastic-stack logs kibana
 kubectl replace --force -f pod.yaml
 **Init Containers**
+./init-container-def.yaml
+-------------********************---------*****************************-------********************------------------
+Readiness and Liveness Probes:
+Code structure is same, readinessProbe and livenessProbe is the only diff.
+```yaml
+livenessProbe:
+	tcpSocket:
+		port: 3306
+```
+```yaml
+livenessProbe:
+	exec:
+		command:
+			- cat
+			- /tmp/healthy
+```
+-------------********************---------*****************************-------********************------------------
+**Logging:**
+kubectl logs -f pod-name
+kubectl logs -f pod-name -c container-name
+-------------********************---------*****************************-------********************------------------
+**Metrics-server**
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl top nodes
 
+-------------********************---------*****************************-------********************------------------
+**Labels, Selectors & Annotations**
+# To get everything which exists with the label.
+k get all -l env=prod
+k get pods -l env=prod,bu=finance,tier=frontend
+-------------********************---------*****************************-------********************------------------
+**Rolling updates and Rollbacks**
+kubectl create -f deployment-definition.yaml
+kubectl get deployment
+kubectl apply -f deployment-definition.yaml
+kubectl set image deployment myapp-deployment nginx=nginx:1.9.1
+kubectl rollout status deployment myapp-deployment
+kubectl rollout history deployment myapp-deployment
+kubectl rollout undo deployment myapp-deployment
+
+kubectl create -f deployment-definition.yaml --record=true
+```yaml
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1          # Number or percentage of extra pods to add during update
+      maxUnavailable: 1    # Number or percentage of pods that can be unavailable during update
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-image:latest
+```
+-------------********************---------*****************************-------********************------------------
+**Deployment Strategy**
+Recreate, RollingUpdate, Blue-Green, Canary
+kubectl scale deployment myapp-deployment --replicas=5
+-------------********************---------*****************************-------********************------------------
+-------------********************---------*****************************-------********************------------------
+-------------********************---------*****************************-------********************------------------
