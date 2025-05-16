@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+spec:
+  completion: 3
+  parallelism: 3
+  template:
+      spec:
+        containers:
+        - name: my-container
+          image: ubuntu:latest
+          command: ["expr", "1", "+", "1"]
+
+      restartPolicy: Never

@@ -402,5 +402,15 @@ spec:
 Recreate, RollingUpdate, Blue-Green, Canary
 kubectl scale deployment myapp-deployment --replicas=5
 -------------********************---------*****************************-------********************------------------
+**jobs & CronJobs**
+./job-def.yaml
+```shell
+kubectl create -f job-def.yaml
+kubectl get jobs
+kubectl delete job job-name
+kubectl logs pod_name
+```
+./cronjob-def.yaml
+backOffLimit: 25 # This is so the job does not quit before it succeeds
 -------------********************---------*****************************-------********************------------------
 -------------********************---------*****************************-------********************------------------
