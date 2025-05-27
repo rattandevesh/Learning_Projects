@@ -1,0 +1,6 @@
+sagemaker
+pandas
+scikit-learn
+boto3
+joblib
+yaml
